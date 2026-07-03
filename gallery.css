@@ -1,0 +1,374 @@
+
+
+/* =====================================================================
+   GALLERY HERO — SPLIT PANELS + CIRCLE BADGE
+===================================================================== */
+.gallery-hero {
+    position: relative;
+    margin-top: 90px;              /* clear fixed navbar */
+    height: 90vh;
+    min-height: 560px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---- 4 image panels (2×2 grid) ---- */
+.gallery-hero-panels {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px;                       /* thin dividing line between panels */
+}
+
+.ghp {
+    overflow: hidden;
+}
+
+.ghp img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .6s ease;
+}
+
+.ghp:hover img {
+    transform: scale(1.05);
+}
+
+/* ---- subtle dark vignette overlay ---- */
+.gallery-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.32);
+    z-index: 1;
+}
+
+/* =====================================================================
+   CIRCLE BADGE
+===================================================================== */
+.gallery-hero-badge {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Outer white ring */
+.ghb-ring {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 0 0 10px rgba(255, 255, 255, 0.20),   /* soft halo */
+        0 20px 60px rgba(0, 0, 0, 0.35);         /* depth shadow */
+    animation: badge-float 4s ease-in-out infinite;
+}
+
+/* Floating animation */
+@keyframes badge-float {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+
+/* Inner gold filled circle */
+.ghb-inner {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background-color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    border: 4px solid white;        /* crisp white inner border */
+}
+
+/* Hotel name text */
+.ghb-text {
+    font-family: var(--font-heading);
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1.3;
+    letter-spacing: 0.3px;
+}
+
+/* =====================================================================
+   GALLERY GRID
+===================================================================== */
+.gallery-section {
+    width: 90%;
+    max-width: 1300px;
+    margin: 60px auto 90px;
+}
+
+.gallery-grid {
+    position: relative;   /* positioning reference for the floating badge */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 280px;
+    gap: 16px;
+}
+
+/* Wide items span 2 columns */
+.g-item.g-large {
+    grid-column: span 2;
+}
+
+/* =====================================================================
+   FLOATING CENTER BADGE (over the gallery grid)
+   - position: absolute + transform centering keeps it perfectly centered
+     at every breakpoint without ever affecting grid flow/sizing.
+   - pointer-events: none so it never blocks clicks/hover on images below.
+===================================================================== */
+.grid-center-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Outer white ring */
+.gcb-ring {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 0 0 10px rgba(255, 255, 255, 0.20),
+        0 20px 60px rgba(0, 0, 0, 0.35);
+    animation: gcb-float 4s ease-in-out infinite;
+}
+
+/* Thin black circular outline */
+.gcb-outline {
+    width: 258px;
+    height: 258px;
+    border-radius: 50%;
+    border: 1.5px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Gold inner circle */
+.gcb-inner {
+    width: 236px;
+    height: 236px;
+    border-radius: 50%;
+    background-color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Hotel name text */
+.gcb-text {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    letter-spacing: 0.3px;
+}
+
+/* Gentle float animation, purely decorative */
+@keyframes gcb-float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+    .gcb-ring { animation: none; }
+}
+
+/* =====================================================================
+   GALLERY ITEM
+===================================================================== */
+.g-item {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 3px solid var(--gold);
+}
+
+.g-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .5s ease;
+}
+
+.g-item:hover img {
+    transform: scale(1.08);
+}
+
+/*  */
+
+.g-item:hover .g-overlay { opacity: 1; }
+
+.g-overlay i {
+    font-size: 28px;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.g-overlay span {
+    font-size: 15px;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    letter-spacing: .5px;
+}
+
+/* =====================================================================
+   CTA
+===================================================================== */
+.gallery-cta {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2e2208 100%);
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.gallery-cta-inner h2 {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 14px;
+}
+
+.gallery-cta-inner p {
+    font-size: 17px;
+    color: #d0c5a7;
+    max-width: 520px;
+    margin: 0 auto 34px;
+}
+
+/* =====================================================================
+   RESPONSIVE
+===================================================================== */
+
+/* Laptop */
+@media (max-width: 991.98px) {
+    .gallery-hero       { height: 80vh; min-height: 480px; }
+    .ghb-ring           { width: 240px; height: 240px; }
+    .ghb-inner          { width: 204px; height: 204px; }
+    .ghb-text           { font-size: 1.4rem; }
+
+    .gallery-grid       { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 240px; }
+    .g-item.g-large     { grid-column: span 2; }
+
+    .gcb-ring           { width: 240px; height: 240px; }
+    .gcb-outline        { width: 206px; height: 206px; }
+    .gcb-inner          { width: 188px; height: 188px; padding: 16px; }
+    .gcb-text           { font-size: 1.25rem; }
+}
+
+/* Tablet */
+@media (max-width: 767.98px) {
+    .gallery-hero       { height: 70vh; min-height: 420px; }
+    .ghb-ring           { width: 210px; height: 210px; }
+    .ghb-inner          { width: 178px; height: 178px; padding: 18px; }
+    .ghb-text           { font-size: 1.2rem; }
+
+    .gallery-grid       { grid-auto-rows: 210px; gap: 12px; }
+    .gallery-section    { width: 88%; }
+    .gallery-cta-inner h2 { font-size: 26px; }
+
+    .gcb-ring           { width: 190px; height: 190px; box-shadow: 0 0 0 8px rgba(255,255,255,.20), 0 16px 50px rgba(0,0,0,.35); }
+    .gcb-outline        { width: 162px; height: 162px; }
+    .gcb-inner          { width: 146px; height: 146px; padding: 14px; }
+    .gcb-text           { font-size: 1.05rem; }
+}
+
+/* Large phones */
+@media (max-width: 425px) {
+    .gallery-hero       { height: 65vh; min-height: 380px; }
+    .gallery-hero-panels{ grid-template-columns: 1fr 1fr; } /* keep 2×2 on small */
+
+    .ghb-ring           { width: 180px; height: 180px; box-shadow: 0 0 0 7px rgba(255,255,255,.18), 0 12px 40px rgba(0,0,0,.3); }
+    .ghb-inner          { width: 152px; height: 152px; padding: 14px; }
+    .ghb-text           { font-size: 1.05rem; }
+
+    /* Single column gallery on small phones */
+    .gallery-grid       { grid-template-columns: 1fr; grid-auto-rows: 230px; }
+    .g-item.g-large     { grid-column: span 1; }
+    .gallery-section    { width: 92%; margin-bottom: 60px; }
+
+    .gcb-ring           { width: 150px; height: 150px; box-shadow: 0 0 0 6px rgba(255,255,255,.18), 0 12px 40px rgba(0,0,0,.3); }
+    .gcb-outline        { width: 128px; height: 128px; border-width: 1px; }
+    .gcb-inner          { width: 114px; height: 114px; padding: 10px; }
+    .gcb-text           { font-size: 0.8rem; }
+}
+
+/* Small phones */
+@media (max-width: 375px) {
+    .gallery-hero       { height: 60vh; min-height: 340px; }
+    .ghb-ring           { width: 160px; height: 160px; }
+    .ghb-inner          { width: 134px; height: 134px; padding: 12px; }
+    .ghb-text           { font-size: 0.95rem; }
+    .gallery-grid       { grid-auto-rows: 200px; gap: 10px; }
+
+    .gcb-ring           { width: 130px; height: 130px; }
+    .gcb-outline        { width: 111px; height: 111px; border-width: 1px; }
+    .gcb-inner          { width: 99px; height: 99px; padding: 8px; }
+    .gcb-text           { font-size: 0.7rem; }
+}
+
+/* Extra small phones */
+@media (max-width: 320px) {
+    .gallery-hero       { height: 55vh; min-height: 300px; }
+    .ghb-ring           { width: 140px; height: 140px; }
+    .ghb-inner          { width: 116px; height: 116px; padding: 10px; }
+    .ghb-text           { font-size: 0.85rem; }
+    .gallery-grid       { grid-auto-rows: 180px; gap: 8px; }
+
+    .gcb-ring           { width: 110px; height: 110px; }
+    .gcb-outline        { width: 94px; height: 94px; border-width: 1px; }
+    .gcb-inner          { width: 84px; height: 84px; padding: 6px; }
+    .gcb-text           { font-size: 0.6rem; }
+}
+
+/* Large desktop */
+@media (min-width: 1400px) {
+    .gallery-hero       { height: 85vh; }
+    .ghb-ring           { width: 320px; height: 320px; }
+    .ghb-inner          { width: 275px; height: 275px; }
+    .ghb-text           { font-size: 1.85rem; }
+    .gallery-grid       { grid-auto-rows: 320px; }
+
+    .gcb-ring           { width: 320px; height: 320px; }
+    .gcb-outline        { width: 276px; height: 276px; }
+    .gcb-inner          { width: 252px; height: 252px; padding: 22px; }
+    .gcb-text           { font-size: 1.6rem; }
+}
